@@ -20,5 +20,16 @@
         android:layout_height="wrap_content"
         android:text="@string/label_proximity" />
 
+    <TextView
+        android:id="@+id/label_accelerometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accelerometer" />
+
+    <TextView
+        android:id="@+id/label_magnetometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Magnetometer" />
 
 </LinearLayout>

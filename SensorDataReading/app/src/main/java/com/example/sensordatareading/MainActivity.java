@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor mSensorLight;
     private Sensor mSensorAccelerometer;
     private Sensor mSensorMagnetometer;
+    private Sensor mSensorGyroscope;
 
     private SensorManager mSensorManager;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView mTextSensorProximity;
     private TextView mtextSensorAccelerometer;
     private TextView mTextSensorMagnetometer;
+    private TextView mTextSensorGyroscope;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mTextSensorProximity = findViewById(R.id.label_proximity);
         mtextSensorAccelerometer= findViewById(R.id.label_accelerometer);
         mTextSensorMagnetometer = findViewById(R.id.label_magnetometer);
+        mTextSensorGyroscope = findViewById(R.id.label_gyroscope);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mSensorProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        mSensorGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
         String sensorError = getResources().getString(R.string.error_no_sensor);
 
@@ -56,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(mSensorMagnetometer ==null)
             mTextSensorMagnetometer.setText(sensorError);
 
+
+        if(mSensorGyroscope ==null)
+            mTextSensorGyroscope.setText(sensorError);
     }
 
     @Override
@@ -73,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if(mSensorMagnetometer!=null){
             mSensorManager.registerListener(this, mSensorMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        if(mSensorGyroscope!=null){
+            mSensorManager.registerListener(this, mSensorGyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
@@ -107,6 +117,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     currentValue[i] = event.values[i];
                 }
                 mTextSensorMagnetometer.setText("Magnetometer value:" + currentValue[0] + " " + currentValue[1] + " " + currentValue[2]);
+                break;
+            case Sensor.TYPE_GYROSCOPE:
+                for(int i=0; i<3; i++){
+                    currentValue[i] = event.values[i];
+                }
+                mTextSensorGyroscope.setText("Gyroscope value:" + currentValue[0] + " " + currentValue[1] + " " + currentValue[2]);
+                break;
         }
     }
 
